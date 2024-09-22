@@ -63,3 +63,4 @@ Step 8:
 Ran all the GraphQL queries that were there in the assignment
 
 
+Same steps used for Task one and task two
