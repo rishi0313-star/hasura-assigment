@@ -1,0 +1,102 @@
+Configure a GraphQL API that can answer the following statements via GraphQL:
+1. How many artists are in the database?
+
+Query - 
+query {
+  artist_aggregate {
+    aggregate {
+      count
+    }
+  }
+}
+
+Result - 
+{
+  "data": {
+    "artist_aggregate": {
+      "aggregate": {
+        "count": 277
+      }
+    }
+  }
+}
+
+2. List the first track of every album by every artist in ascending order.
+
+Query - 
+query {
+  album(order_by: { title: asc }) {
+    title
+    tracks(limit: 1, order_by: { name: asc }) {
+      name
+    }
+  }
+}
+
+3. Get all albums for artist id = 5 without specifying a where clause.
+
+Query - 
+query {
+  album(where: { artist_id: { _eq: 5 } }) {
+    title
+    tracks {
+      name
+    }
+  }
+}
+
+Result - 
+{
+  "data": {
+    "album": [
+      {
+        "title": "Big Ones",
+        "tracks": [
+          { "name": "Walk on Water" },
+          { "name": "Love in an Elevator" }
+        ]
+      },
+      {
+        "title": "Permanent Vacation",
+        "tracks": [
+          { "name": "Heart's Done Time" },
+          { "name": "Magic Touch" }
+        ]
+      }
+    ]
+  }
+}
+
+
+4. Using a GraphQL mutation, add your favorite artist and one of their albums that isn’t in
+the dataset.
+
+Query - 
+mutation {
+  insert_artist_one(object: {name: "Coldplay1", artist_id: 62131}) {
+    artist_id
+    name
+  }
+  insert_album_one(object: {title: "Demons3", album_id: 5655, artist_id: 62131}) {
+    album_id
+    title
+  }
+}
+
+Result - 
+{
+  "data": {
+    "insert_artist_one": {
+      "artist_id": 62131,
+      "name": "Coldplay1"
+    },
+    "insert_album_one": {
+      "album_id": 5655,
+      "title": "Demons3"
+    }
+  }
+}
+
+5. How did you identify which ID to include in the mutation?
+
+After inserting the new artist, the returned artist_id from the insert_artist_one mutation is the identifier to use for the related album in the insert_album_one mutation.
