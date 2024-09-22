@@ -1,0 +1,117 @@
+Objective:
+1. Share your query, the headers used and the results of the following three queries:
+
+a) 
+Query - 
+
+Unset
+# Execute as an administrator
+query getTracks($genre: String, $limit: Int, $offset: Int) {
+tracks(limit: $limit, offset: $offset, where: {genre: {name: {_eq: $genre}}})
+{
+name
+id
+}
+}
+---
+Query variables:
+{
+"genre":"Metal",
+"limit": 5,
+"offset":50
+}
+
+-----
+Headers:
+x-hasura-admin-secret: myadminsecretkey
+
+-----
+Result:
+{
+  "data": {
+    "tracks": [
+      {
+        "name": "Power2",
+        "id": 51
+      },
+      {
+        "name": "Metal ",
+        "id": 52
+      },
+      {
+        "name": "Sentinel",
+        "id": 53
+      },
+      {
+        "name": "Hell",
+        "id": 54
+      },
+      {
+        "name": "Grind",
+        "id": 55
+      }
+    ]
+  }
+}
+
+b) Query - 
+Unset
+
+Unset
+# Execute as an Artist
+query getAlbumsAsArtist{
+albums {
+title
+}
+}
+
+Headers - 
+
+x-hasura-role: artist
+x-hasura-artist-id: 5
+
+Result - 
+{
+  "data": {
+    "album": [
+      {
+        "title": "Demons"
+      },
+      {
+        "title": "Demons3"
+      }
+    ]
+  }
+}
+
+c) Query - 
+# Execute as an Artist
+query trackValue {
+tracks_aggregate {
+aggregate {
+sum {
+unit_price
+}
+}
+}
+}
+
+Headers - 
+
+x-hasura-role: artist
+x-hasura-artist-id: 5
+
+Result - 
+{
+  "data": {
+    "tracks_aggregate": {
+      "aggregate": {
+        "sum": {
+          "unit_price": 38.6
+        }
+      }
+    }
+  }
+}
+
+
