@@ -1,0 +1,13 @@
+Describe any challenges you encountered and your troubleshooting steps to
+address them.
+
+  1. First issue that i faced was to import postgres file in my docker.
+  The root cause of this issue was that already a postgres server was already running on port 5432.
+  So on changing the port for my server it resolved the issue.
+
+  2. Even after running the docker container, i was unable to run the localhost
+The root cause of this issue might be that i have not added the admin secret key because of which local host was not starting
+So on adding the admin secret key it resolved the issue.
+
+  3. Importing the data on Hasura
+Unable to connect the database, on changing the database url with correct username and password resolved the issue
