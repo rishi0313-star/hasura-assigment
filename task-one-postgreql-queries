@@ -1,1 +1,41 @@
+Using a Postgres client, configure a SQL statement to retrieve the below information.
 
+1.Return the artist with the most number of albums
+
+SELECT artist_id, COUNT(album_id) as album_count
+FROM album
+GROUP BY artist_id
+ORDER BY album_count DESC
+LIMIT 1;
+
+Result:
+artist_id   album_count
+90          21
+
+2. Return the top three genres found in the dataset in descending order
+
+SELECT genre_id,COUNT(track_id) as track_count
+FROM track
+GROUP BY genre_id
+ORDER BY track_count DESC
+LIMIT 3;
+
+Result:
+genre_id    track_count
+1     1297
+7     579
+3     374
+
+3.Return the number of tracks and average run time for each media type
+
+SELECT media_type_id,COUNT(track_id) as track_count, AVG(milliseconds) as avg_run_time
+FROM track
+GROUP BY media_type_id;
+
+Result:
+media_type_id     track_count avg_run_time
+1     3034  265574.288727752142
+3     214   2342940.425233644860
+5     11    276506.909090909091
+4     7     260894.714285714286
+2     237   281723.873417721519
